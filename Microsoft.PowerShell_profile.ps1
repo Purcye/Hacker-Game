@@ -10,6 +10,7 @@ Function Set-LockStatus {
         [Switch]$Open,
         [Switch]$Close
     )
+    Invoke-WebRequest -uri 'http://192.168.0.2/updatescore?game=hacking&score=100' -UseBasicParsing
     Write-Host "Lock function reports lock open"
     Return "Open"
 
@@ -187,7 +188,6 @@ REMARKS
                 Write-Host "Sending command ""$Command"" ..."
                 Start-Sleep -Seconds 1
                 If ($Command -eq "Open") {
-                    If ((Set-LockStatus -Open) -eq "Open") {
                         Write-Host -ForegroundColor Green "Lock status: Open!"
                         write-host "
                ,---------------------------,
@@ -211,7 +211,8 @@ REMARKS
 /-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/ /
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                        "
-                        $WebRequest = Invoke-WebRequest -uri 'http://192.168.0.2/updatescore?game=hacking&score=100' -UseBasicParsing
+                    If ((Set-LockStatus -Open) -eq "Open") {
+                        #$WebRequest = Invoke-WebRequest -uri 'http://192.168.0.2/updatescore?game=hacking&score=100' -UseBasicParsing
                         start-sleep -seconds 5
                         clear #clears the console
                         
